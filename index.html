@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>replit</title>
+    <style>
+      #canvas1 {background-color: silver;}
+
+      
+    </style>
+  </head>
+  <body>
+    <canvas width=400 height=400 id="canvas1"></canvas>
+    
+    <script>
+
+      // get a reference to the element and the drawing context
+
+      let c = document.querySelector("#canvas1");
+      let ctx = c.getContext("2d");
+      let y = 40;
+      let x = 14;
+      let times = true;
+      let hit = true;
+      let anim = true;
+
+      let en = c.getContext("2d");
+      let yE = Math.floor((Math.random() * 400)+ 30);
+      let xE = 400;
+
+      let points = 0;
+      let lives = 3;
+      let level = 1;
+      let crash = 0;
+
+      const harm = {"type":"harm", "xVal": 100, "YVal":100, "speed": 1};
+      const point = {"type":"points", "xVal": 100, "YVal":100, "speed": 1};
+      
+      function addValue(keydown){
+          if(keydown.key == 'ArrowUp'){
+            if(y > 30){
+              y-=2;
+            }
+          }
+          if(keydown.key == 'ArrowDown'){
+            if(y < 390){
+              y+=2;
+            }
+          }
+      }
+
+      function checkCrash(){
+        var dx = (x + 10) - (xE + 10);
+        var dy = (y + 10) - (yE + 10);
+        var distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 20) {
+          crash = 1;
+        }
+        else{
+          crash = 0;
+        }
+      }
+
+      ctx.font = "30px Arial";
+      ctx.strokeText("Hello World", 10, 50);
+      
+      window.addEventListener('keydown',(e)=>{
+        if(e.key == 's' && times){
+          times = false;
+          ctx.clearRect(0,0, c.width, c.height)
+      
+      function draw () {
+          
+        let randVal = Math.floor((Math.random() * 400));
+        // clear drawing
+         ctx.clearRect(0,0, c.width, c.height)
+        window.addEventListener('keydown',addValue)
+        
+        // render
+
+        ctx.font = "15px Arial";
+        ctx.fillText("Points: ", 2, 15);
+        ctx.fillText(points, 50, 15);
+        ctx.fillText("Lives: ", 80, 15);
+        ctx.fillText(lives, 123, 15);
+        ctx.fillText("Level: ", 153, 15);
+        ctx.fillText(level, 198, 15);
+
+        ctx.moveTo(0, 18);
+        ctx.lineTo(400, 18);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle ="red"
+        ctx.fill();
+
+        en.beginPath();
+        en.arc(xE, yE, 10, 0, 2 * Math.PI);
+        en.closePath();
+        en.fillStyle ="blue"
+        en.fill();
+          xE--;
+
+    checkCrash();
+        if(crash == 1 && hit){
+             lives--;
+            hit = false;
+           }
+          if(lives == 0){
+            anim = false;
+          }
+        
+        if(xE == 0 ){
+          xE = c.width;
+          yE = randVal;
+           hit = true;
+        }
+        // call function
+        if(anim){
+       window.requestAnimationFrame(draw);
+      }
+        else{
+          ctx.clearRect(0,0, c.width, c.height);
+          ctx.font = "30px Arial";
+          ctx.strokeText("LOSER", 10, 50);
+        }
+      }
+      if(lives > 0){
+        draw() 
+      }
+      
+          }
+      })
+      
+    </script>
+  </body>
+</html>
